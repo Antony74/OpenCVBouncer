@@ -10,20 +10,22 @@ void setup() {
     size(640,480, P3D);
     frameRate(30);
     ellipseMode(RADIUS);
-    video = new Capture(this, width/2, height/2);
     opencv = new OpenCV(this, width/2, height/2);
     b = new Ball();
-
-
-    video.start();
-    video.read();
 
     opencv.startBackgroundSubtraction(50,3,0.5);
 
 }
 
 void draw() {
-    clear();
+
+  if (video == null) {
+    video = new Capture(this, width/2, height/2);
+    video.start();
+    video.read();
+  }
+  
+  clear();
     scale(2);
     opencv.loadImage(video);
     opencv.flip(OpenCV.HORIZONTAL);
